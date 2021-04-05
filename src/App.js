@@ -16,7 +16,7 @@ function App() {
       }
       const imagenesPorPagina = 30;
       const key = "8805302-ec04040c4cef9f8cfa99e63bd";
-      const url = `https://pixabay.com/api/?key=${key}&q=${busqueda}&per_page=${imagenesPorPagina}`;
+      const url = `https://pixabay.com/api/?key=${key}&q=${busqueda}&per_page=${imagenesPorPagina}&page=${paginaactual}`;
 
       const respuesta = await fetch(url);
       const resultado = await respuesta.json();
@@ -27,7 +27,19 @@ function App() {
       guardarTotalPaginas(totalPaginas);
     };
     consultarApi();
-  }, [busqueda]);
+  }, [busqueda, paginaactual]);
+
+  const paginaAnterior = () => {
+    const nuevaPaginaActual = paginaactual - 1;
+    if (nuevaPaginaActual === 0) return;
+    guardarPaginaActual(nuevaPaginaActual);
+  };
+
+  const paginaSiguiente = () => {
+    const nuevaPaginaActual = paginaactual + 1;
+    if (nuevaPaginaActual > totalpaginas) return;
+    guardarPaginaActual(nuevaPaginaActual);
+  };
 
   return (
     <div className="container">
@@ -37,6 +49,25 @@ function App() {
       </div>
       <div className="row justify-content-center">
         <ListadoImagenes imagenes={imagenes} />
+
+        {paginaactual === 1 ? null : (
+          <button
+            type="button"
+            className="btn btn-info mr-1"
+            onClick={paginaAnterior}
+          >
+            &laquo; Anterior
+          </button>
+        )}
+        {paginaactual === totalpaginas ? null : (
+          <button
+            type="button"
+            className="btn btn-info mr-1"
+            onClick={paginaSiguiente}
+          >
+            Siguiente &raquo;
+          </button>
+        )}
       </div>
     </div>
   );
