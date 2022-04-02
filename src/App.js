@@ -48,7 +48,7 @@ function App() {
   return (
     <div className="container">
       <div className="jumbotron">
-        <p className="lead text-center">Buscador de imágenes</p>
+        <p className="lead text-center">NEGRO</p>
         <Formulario guardarBusqueda={guardarBusqueda}></Formulario>
       </div>
       <div className="row justify-content-center">
